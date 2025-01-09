@@ -22,7 +22,11 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     today = date.today()
     birth_date = datetime.strptime (birthday, "%Y-%m-%d").date()
 
+   # age = today.year - birth_date.year
     age = today.year - birth_date.year
+    if (today.month, today.day) < (birth_date.month, birth_date.day):
+        age -= 1
+   
    # TODO 생일 지난 여부 관련 로직 추가 개발 필요
     
     return {
