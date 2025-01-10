@@ -22,7 +22,10 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     today = date.today()
     birth_date = datetime.strptime (birthday, "%Y-%m-%d").date()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d22dd4e (0110 띠 계산)
    #만나이 계산
     age = today.year - birth_date.year
     if (today.month, today.day) < (birth_date.month, birth_date.day):
