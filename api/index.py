@@ -22,22 +22,17 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     today = date.today()
     birth_date = datetime.strptime (birthday, "%Y-%m-%d").date()
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d22dd4e (0110 띠 계산)
-   #만나이 계산
+    #만나이 계산
     age = today.year - birth_date.year
-    if (today.month, today.day) < (birth_date.month, birth_date.day):
-        age -= 1
-   #띠 계산 
-    def calculate_zodiac(birth_date.year):
-     zodiac = ["쥐", "소", "호랑이", "토끼", "용", "뱀", "말", "양","원숭이", "닭", "개", "돼지"]
-     index = (birth_date.year - 4) % 12
-     zodiac = calculate_zodiac(birth_date.year)
-    return zodiac[index]
 
-    
+    #띠 계산 
+    zodiac = ["🐀 Rat","🐂 Ox", "🐅 Tiger", "🐇 Rabbit", "🐉 Dragon", "🐍 Snake", "🐎 Horse", "🐐 Goat", "🐒 Monkey", "🐓 Rooster", "🐕 Dog", "🐖 Pig"]
+    index = (birth_date.year - 4) %12
+    zodiac = zodiac[index]
+
+    if (today.month, today.day) < (birth_date.month, birth_date.day):
+       age -= 1
+
     return {
             "birthday": birthday,
             "age": str(age),
@@ -45,3 +40,4 @@ def age_calculator(birthday: str) -> Dict[str, str]:
             "basedate": str(today),
             "message": "Age calculated successfully!"
             }
+
