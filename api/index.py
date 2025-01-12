@@ -23,6 +23,10 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     today = date.today()
     birth_date = datetime.strptime (birthday, "%Y-%m-%d").date()
 
+   # 램덤으로 이름이 나오기
+    names = ["조민규","강현룡","권오준","서민혁","백지원","안재영","전희진","배형균","조성근"]
+    random_name = random.choice(names)
+
     #만나이 계산
     age = today.year - birth_date.year
     #한국식 나이 계산
@@ -38,7 +42,7 @@ def age_calculator(birthday: str) -> Dict[str, str]:
 
     return {
             "birthday": birthday,
-            "age": str(age) + " (" + zodiac + ") 한국나이는 " + str(kage),
+            "age": str(age) + zodiac + " 한국나이는: " + str(kage) + "발표자는 {random_name}입니다.",
             "kage": str(kage),
             "zodiac" : zodiac,
             "basedate": str(today),
