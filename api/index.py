@@ -59,12 +59,6 @@ def age_calculator(birthday: str) -> Dict[str, str]:
 def get_os_pretty_name():
     with open('/etc/os-release', 'r') as f:
         for line in f:
-            if line.startswith('pretty_name='):
+            if line.startswith('PRETTY_NAME='):
                 return line.split('=')[1].replace('\n', '').strip('"')
     return None 
-
-
-
-
-
-
