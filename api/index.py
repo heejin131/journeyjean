@@ -20,7 +20,7 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     :param birthday: 생년월일 (형식: YYYY-MM-DD)
     :return: 생년월일 및 만나이를 포함한 JSON 응답
     """
-    
+
     today = date.today()
     birth_date = datetime.strptime (birthday, "%Y-%m-%d").date()
 
@@ -28,15 +28,17 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     version = sys.version
 
    # 랜덤으로 이름이 나오기
+
     names = ["조민규","강현룡","권오준","서민혁","백지원","안재영","전희진","배형균","조성근"]
     presenter = random.choice(names)
 
     #만나이 계산
     age = today.year - birth_date.year
     #한국식 나이 계산
-    kage = kac.how_korean_age(year_of_birth=birth_date.year)  
 
-    #띠 계산 
+    kage = kac.how_korean_age(year_of_birth=birth_date.year)
+
+    #띠 계산
     zodiac = ["🐀 Rat","🐂 Ox", "🐅 Tiger", "🐇 Rabbit", "🐉 Dragon", "🐍 Snake", "🐎 Horse", "🐐 Goat", "🐒 Monkey", "🐓 Rooster", "🐕 Dog", "🐖 Pig"]
     index = (birth_date.year - 4) %12
     zodiac = zodiac[index]
@@ -50,6 +52,13 @@ def age_calculator(birthday: str) -> Dict[str, str]:
             "version": sys.version,
             "zodiac" : zodiac,
             "basedate": str(today),
+            "os-name" : get_os_pretty_name(),
             "message": "Age calculated successfully!"
             }
 
+def get_os_pretty_name():
+    with open('/etc/os-release', 'r') as f:
+        for line in f:
+            if line.startswith('PRETTY_NAME='):
+                return line.split('=')[1].replace('\n', '').strip('"')
+    return None 
