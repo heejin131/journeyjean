@@ -7,3 +7,43 @@
 
 ### Ref
 - https://docs.python.org/ko/3.10/library/datetime.html
+
+## DEV
+$ pyenv global
+3.10.12
+# $ python -m venv venv
+$ source venv/bin/activate
+# $pip install -r requirements.txt
+$ uvicorn api.index:app --reload
+
+## Contributing
+* scenario #1
+
+# setting ssh
+$ git clone <URL>
+$ git branch <VER>/<NAME>
+$ git checkout <VER>/<NAME>
+$ git push
+# make PR
+# doing ...
+# dogng ...
+$ git add <FILE_NAME>
+$ git commit -m "<MESSAGE>"
+$ git push
+
+# merge main -> deploy
+# releases & tag
+
+* scenario #2
+
+$ git branch -r
+$ git checkout -t origin/<VER>/<NAME>
+# doing ...
+# dogng ...
+$ git add <FILE_NAME>
+$ git commit -m "<MESSAGE>"
+$ git push
+
+# merge main -> deploy
+# releases & tag
+
