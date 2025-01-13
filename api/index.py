@@ -24,7 +24,10 @@ def age_calculator(birthday: str) -> Dict[str, str]:
     today = date.today()
     birth_date = datetime.strptime (birthday, "%Y-%m-%d").date()
 
-   # 램덤으로 이름이 나오기
+   # 파이썬 버전 출력
+    version = sys.version
+
+   # 랜덤으로 이름이 나오기
     names = ["조민규","강현룡","권오준","서민혁","백지원","안재영","전희진","배형균","조성근"]
     presenter = random.choice(names)
 
