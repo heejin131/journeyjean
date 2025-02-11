@@ -4,6 +4,7 @@ from typing import Dict
 import random
 import korean_age_calculator as kac
 import sys
+import pandas as pd
 
 ### Create FastAPI instance with custom docs and openapi url
 app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
@@ -48,7 +49,7 @@ def age_calculator(birthday: str) -> Dict[str, str]:
 
     return {
             "birthday": birthday,
-            "age": f"만나이는:{age}살/ 한국나이는:{kage}살 / {zodiac} / 발표자는:{presenter}/{sys.version}",
+            "age": f"만나이는:{age}살/ 한국나이는:{kage}살 / {zodiac} ",
             "version": sys.version,
             "zodiac" : zodiac,
             "basedate": str(today),
@@ -62,3 +63,20 @@ def get_os_pretty_name():
             if line.startswith('PRETTY_NAME='):
                 return line.split('=')[1].replace('\n', '').strip('"')
     return None 
+
+@app.get("/api/py/select_all")
+def select_all():
+    # pandas dataframe 임의로 하나 만들어서 
+    # 임의로 만든 dataframe을 아래와 같은 형식으로 리턴
+    # dt.to_dict()
+    import pandas as pd
+    import json
+    json_data = '''[
+        {"id":1, "name":"KIM"},
+        {"id":2, "name":"lee"}
+    ]'''
+    
+    data = json.loads(json_data)
+    df = pd.DataFrame(data)
+    return df.to_dict(orient="records")
+
