@@ -5,6 +5,11 @@ import random
 import korean_age_calculator as kac
 import sys
 import pandas as pd
+import json
+import os
+import psycopg
+from  dotenv import load_dotenv
+from psycopg.rows import dict_row
 
 ### Create FastAPI instance with custom docs and openapi url
 app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
@@ -64,19 +69,29 @@ def get_os_pretty_name():
                 return line.split('=')[1].replace('\n', '').strip('"')
     return None 
 
+load_dotenv()
+DB_CONFIG = {
+    "dbname": os.getenv("DB_NAME"),
+    "user": os.getenv("DB_USERNAME"),
+    "password": os.getenv("DB_PASSWORD"),
+    "host": os.getenv("DB_HOST"),
+    "port": os.getenv("DB_PORT"),
+}
+
 @app.get("/api/py/select_all")
 def select_all():
-    # pandas dataframe 임의로 하나 만들어서 
-    # 임의로 만든 dataframe을 아래와 같은 형식으로 리턴
-    # dt.to_dict()
-    import pandas as pd
-    import json
-    json_data = '''[
-        {"id":1, "name":"KIM"},
-        {"id":2, "name":"lee"}
-    ]'''
+    query = """
+    SELECT
+        l.menu_name,
+        m.name,
+        l.dt
+    FROM 
+        lunch_menu l  
+        INNER JOIN member m
+        ON l.member_id = m.id
+    """
+    with psycopg.connect(**DB_CONFIG, row_factory=dict_row) as conn:
+        cur = conn.execute(query=query)
+        rows = cur.fetchall()
+        return rows
     
-    data = json.loads(json_data)
-    df = pd.DataFrame(data)
-    return df.to_dict(orient="records")
-
