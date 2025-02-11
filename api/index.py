@@ -4,6 +4,12 @@ from typing import Dict
 import random
 import korean_age_calculator as kac
 import sys
+import pandas as pd
+import json
+import os
+import psycopg
+from  dotenv import load_dotenv
+from psycopg.rows import dict_row
 
 ### Create FastAPI instance with custom docs and openapi url
 app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
@@ -48,7 +54,7 @@ def age_calculator(birthday: str) -> Dict[str, str]:
 
     return {
             "birthday": birthday,
-            "age": f"만나이는:{age}살/ 한국나이는:{kage}살 / {zodiac} / 발표자는:{presenter}/{sys.version}",
+            "age": f"만나이는:{age}살/ 한국나이는:{kage}살 / {zodiac} ",
             "version": sys.version,
             "zodiac" : zodiac,
             "basedate": str(today),
@@ -62,3 +68,27 @@ def get_os_pretty_name():
             if line.startswith('PRETTY_NAME='):
                 return line.split('=')[1].replace('\n', '').strip('"')
     return None 
+
+load_dotenv()
+# DB_CONFIG = {
+#     "dbname": os.getenv("DB_NAME"),
+#     "user": os.getenv("DB_USERNAME"),
+#     "password": os.getenv("DB_PASSWORD"),
+#     "host": os.getenv("DB_HOST"),
+#     "port": os.getenv("DB_PORT"),
+# }
+
+DB_CONFIG = {
+    "dbname": os.getenv("POSTGRES_DATABASE"),
+    "user": os.getenv("POSTGRES_USE"),
+    "password": os.getenv("POSTGRES_PASSWORD"),
+    "host": os.getenv("POSTGRES_HOST"),
+    "port": os.getenv("POSTGRES_PORT"),
+}
+
+@app.get("/api/py/select_all")
+def select_all():
+    with psycopg.connect(**DB_CONFIG, row_factory=dict_row) as conn:
+        cur = conn.execute("SELECT * FROM view_select_all")
+        rows = cur.fetchall()
+        return rows
