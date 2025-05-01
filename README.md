@@ -44,7 +44,7 @@ $ git push
 ```
 
 ### USE
-- https://ac.journeyjean.shop
+- https://age.journeyjean.shop
 
 ### Ref
 - https://docs.python.org/ko/3.10/library/datetime.html
